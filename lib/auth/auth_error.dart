@@ -1,7 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show immutable;
 
-Map<String, AuthError> authErrorMapping = {};
+Map<String, AuthError> authErrorMapping = {
+  "user-not-found": const AuthErrorUserNotFound(),
+  "weak-password": const AuthErrorWeakPassword(),
+  "invalid-email": const AuthErrorInvalidEmail(),
+  "operation-not-allowed": const AuthErrorOperationNotAllowed(),
+  "email-already-in-use": const AuthErrorEmailAlreadyInUse(),
+  "requires-recent-login": const AuthErrorRequiresRecentLogin(),
+  "no-current-user": const AuthErrorNoCurrentUser(),
+};
 
 @immutable
 abstract class AuthError {
@@ -21,6 +29,72 @@ abstract class AuthError {
 class AuthErrorUnkown extends AuthError {
   const AuthErrorUnkown()
       : super(
-            dialogTitle: "Authentication Error",
-            dialogText: "Aunkown authentication error",);
+          dialogTitle: "Authentication Error",
+          dialogText: "Aunkown authentication error",
+        );
+}
+
+@immutable
+class AuthErrorNoCurrentUser extends AuthError {
+  const AuthErrorNoCurrentUser()
+      : super(
+          dialogTitle: "No current user!",
+          dialogText: "No current user with this information was found!",
+        );
+}
+
+@immutable
+class AuthErrorRequiresRecentLogin extends AuthError {
+  const AuthErrorRequiresRecentLogin()
+      : super(
+          dialogTitle: "Requires recent login!",
+          dialogText:
+              "You need to log out and log in again to perfrom this action",
+        );
+}
+
+@immutable
+class AuthErrorOperationNotAllowed extends AuthError {
+  const AuthErrorOperationNotAllowed()
+      : super(
+          dialogTitle: "Operation not allowed",
+          dialogText: "You cannot register using this method at this moment!",
+        );
+}
+
+@immutable
+class AuthErrorUserNotFound extends AuthError {
+  const AuthErrorUserNotFound()
+      : super(
+          dialogTitle: "User not found",
+          dialogText: "The given user was not found on the server!",
+        );
+}
+
+@immutable
+class AuthErrorWeakPassword extends AuthError {
+  const AuthErrorWeakPassword()
+      : super(
+          dialogTitle: "Weak Password",
+          dialogText:
+              "Please choose a stronger password consist of more characters!",
+        );
+}
+
+@immutable
+class AuthErrorInvalidEmail extends AuthError {
+  const AuthErrorInvalidEmail()
+      : super(
+          dialogTitle: "Invalid Email",
+          dialogText: "Please check your email and try again",
+        );
+}
+
+@immutable
+class AuthErrorEmailAlreadyInUse extends AuthError {
+  const AuthErrorEmailAlreadyInUse()
+      : super(
+          dialogTitle: "Email already in use",
+          dialogText: "Please choose another email to register with",
+        );
 }
