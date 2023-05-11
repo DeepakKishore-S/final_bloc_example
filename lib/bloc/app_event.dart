@@ -31,10 +31,10 @@ class AppEventInitialize extends AppEvent {
 
 @immutable
 class AppEventLogin extends AppEvent {
-  final String login;
+  final String email;
   final String  password;
   const AppEventLogin({
-    required this.login,
+    required this.email,
     required this.password,
   });
 }
@@ -51,10 +51,10 @@ class AppEventGoToLogin extends AppEvent {
 
 @immutable
 class AppEventRegister extends AppEvent {
-  final String login;
+  final String email;
   final String  password;
   const AppEventRegister({
-    required this.login,
+    required this.email,
     required this.password,
   });
 }

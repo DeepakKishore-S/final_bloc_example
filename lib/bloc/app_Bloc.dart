@@ -14,6 +14,141 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           isLoading: false,
           authError: null,
         )) {
+    on<AppEventInitialize>(
+      (event, emit) async {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          emit(
+            const AppStateLoggedOut(
+              isLoading: false,
+              authError: null,
+            ),
+          );
+        } else {
+          final images = await _getImages(user.uid);
+          emit(
+            AppStateLoggedIn(
+              authError: null,
+              images: images,
+              isLoading: false,
+              user: user,
+            ),
+          );
+        }
+      },
+    );
+
+    on<AppEventRegister>(
+      (event, emit) async {
+        emit(
+          const AppStateIsInRegistrationView(
+            isLoading: true,
+            authError: null,
+          ),
+        );
+        final email = event.email;
+        final password = event.password;
+
+        try {
+          final credential =
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
+          final user = credential.user!;
+          emit(
+            AppStateLoggedIn(
+              user: user,
+              images: const [],
+              isLoading: false,
+              authError: null,
+            ),
+          );
+        } on FirebaseAuthException catch (e) {
+          emit(
+            AppStateIsInRegistrationView(
+              authError: AuthError.from(e),
+              isLoading: false,
+            ),
+          );
+        }
+      },
+    );
+
+    on<AppEventGoToLogin>(
+      (event, emit) {
+        emit(
+          const AppStateLoggedOut(
+            isLoading: false,
+            authError: null,
+          ),
+        );
+      },
+    );
+
+    on<AppEventLogin>(
+      (event, emit) async {
+        emit(
+          const AppStateLoggedOut(
+            isLoading: true,
+            authError: null,
+          ),
+        );
+
+        try {
+          final email = event.email;
+          final password = event.password;
+          final credential =
+              await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
+          final user = credential.user!;
+          final images = await _getImages(user.uid);
+          emit(
+            AppStateLoggedIn(
+              user: user,
+              images: images,
+              isLoading: false,
+              authError: null,
+            ),
+          );
+        } on FirebaseAuthException catch (e) {
+          emit(
+            AppStateLoggedOut(
+              isLoading: false,
+              authError: AuthError.from(e),
+            ),
+          );
+        }
+      },
+    );
+
+    on<AppEventGoToRegistration>(
+      (event, emit) {
+        emit(
+          const AppStateIsInRegistrationView(
+            isLoading: false,
+            authError: null,
+          ),
+        );
+      },
+    );
+
+    on<AppEventLogOut>(
+      (event, emit) async {
+        emit(const AppStateLoggedOut(
+          authError: null,
+          isLoading: true,
+        ));
+        await FirebaseAuth.instance.signOut();
+        emit(const AppStateLoggedOut(
+          isLoading: false,
+          authError: null,
+        ));
+      },
+    );
+
     on<AppEventDeleteAccount>(
       (event, emit) async {
         final user = FirebaseAuth.instance.currentUser;
