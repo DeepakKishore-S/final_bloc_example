@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class LoginView extends HookWidget {
-  const LoginView({Key? key}) : super(key: key);
+class RegistrationView extends HookWidget {
+  const RegistrationView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class LoginView extends HookWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Log in"),
+        title: const Text("Registration"),
       ),
       body: Column(
         children: [
@@ -37,7 +37,7 @@ class LoginView extends HookWidget {
               final email = emailController.text;
               final password = passwordController.text;
               context.read<AppBloc>().add(
-                    AppEventLogin(
+                    AppEventRegister(
                       email: email,
                       password: password,
                     ),
@@ -48,10 +48,10 @@ class LoginView extends HookWidget {
           TextButton(
             onPressed: () {
               context.read<AppBloc>().add(
-                    const AppEventGoToRegistration(),
+                    const AppEventGoToLogin(),
                   );
             },
-            child: const Text("Not Registered yet? Register here"),
+            child: const Text("Already Registered yet? Login here"),
           ),
         ],
       ),
