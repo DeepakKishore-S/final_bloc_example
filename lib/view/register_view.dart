@@ -43,7 +43,7 @@ class RegistrationView extends HookWidget {
                     ),
                   );
             },
-            child: const Text("Login"),
+            child: const Text("Register"),
           ),
           TextButton(
             onPressed: () {

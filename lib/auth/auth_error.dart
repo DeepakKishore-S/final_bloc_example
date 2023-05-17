@@ -21,7 +21,7 @@ abstract class AuthError {
   });
 
   factory AuthError.from(FirebaseAuthException exception) =>
-      authErrorMapping[exception.code.toUpperCase().trim()] ??
+      authErrorMapping[exception.code.toLowerCase().trim()] ??
       const AuthErrorUnkown();
 }
 

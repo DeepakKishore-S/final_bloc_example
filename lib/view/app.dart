@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Material App',
         home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Material App Bar'),
-          ),
           body: BlocConsumer<AppBloc, AppState>(
             listener: (context, state) {
               if (state.isLoading) {
