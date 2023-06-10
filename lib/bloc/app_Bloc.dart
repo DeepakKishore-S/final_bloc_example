@@ -22,6 +22,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         if (user == null) { 
           
           emit(
+            
             const AppStateLoggedOut(
               "test",
               isLoading: false,
