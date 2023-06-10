@@ -19,7 +19,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppEventInitialize>(
       (event, emit) async {
         final user = FirebaseAuth.instance.currentUser;
-        if (user == null) {
+        if (user == null) { 
+          
           emit(
             const AppStateLoggedOut(
               "test",
