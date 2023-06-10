@@ -51,7 +51,8 @@ class AppStateLoggedIn extends AppState {
 
 @immutable
 class AppStateLoggedOut extends AppState {
-  const AppStateLoggedOut({
+  final String? test;
+  const AppStateLoggedOut(this.test, {
     required super.isLoading,
     required super.authError,
   });
@@ -80,6 +81,7 @@ extension GetUser on AppState {
     }
   }
 }
+
 extension GetImages on AppState {
   Iterable<Reference>? get images {
     final cls = this;

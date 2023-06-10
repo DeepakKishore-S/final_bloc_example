@@ -9,8 +9,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
+  
   AppBloc()
       : super(const AppStateLoggedOut(
+         "test",
           isLoading: false,
           authError: null,
         )) {
@@ -20,6 +22,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         if (user == null) {
           emit(
             const AppStateLoggedOut(
+              "test",
               isLoading: false,
               authError: null,
             ),
@@ -79,6 +82,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (event, emit) {
         emit(
           const AppStateLoggedOut(
+             "test",
             isLoading: false,
             authError: null,
           ),
@@ -90,6 +94,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (event, emit) async {
         emit(
           const AppStateLoggedOut(
+             "test",
             isLoading: true,
             authError: null,
           ),
@@ -117,6 +122,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           print("=================${e.code}==================");
           emit(
             AppStateLoggedOut(
+               "test",
               isLoading: false,
               authError: AuthError.from(e),
             ),
@@ -139,11 +145,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppEventLogOut>(
       (event, emit) async {
         emit(const AppStateLoggedOut(
+           "test",
           authError: null,
           isLoading: true,
         ));
         await FirebaseAuth.instance.signOut();
         emit(const AppStateLoggedOut(
+           "test",
           isLoading: false,
           authError: null,
         ));
@@ -155,6 +163,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         final user = FirebaseAuth.instance.currentUser;
         if (user == null) {
           emit(const AppStateLoggedOut(
+             "test",
             isLoading: false,
             authError: null,
           ));
@@ -180,6 +189,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           await user.delete();
           await FirebaseAuth.instance.signOut();
           emit(const AppStateLoggedOut(
+             "test",
             isLoading: false,
             authError: null,
           ));
@@ -192,6 +202,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           ));
         } on FirebaseException {
           emit(const AppStateLoggedOut(
+             "test",
             isLoading: false,
             authError: null,
           ));
@@ -206,6 +217,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       final user = state.user;
       if (user == null) {
         emit(const AppStateLoggedOut(
+           "test",
           isLoading: false,
           authError: null,
         ));

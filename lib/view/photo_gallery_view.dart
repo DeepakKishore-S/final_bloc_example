@@ -20,6 +20,8 @@ class PhotoGalleryView extends HookWidget {
       appBar: AppBar(
         title: const Text('Photo Gallery'),
         actions: [
+          // Text(context.read<AppBloc>().),
+          Ink(child: IconButton(icon: Icon(Icons.add), onPressed: (){},),),
           IconButton(
             onPressed: () async {
               final image = await picker.pickImage(
